@@ -1,0 +1,16 @@
+<ng-container *ngIf="isAuthenticated(); else loginTemplate">
+  <!-- <div class="column gap-3 px-3">
+  </div> -->
+  <app-header></app-header>
+  <div class="grid-container">
+    <div class="sidebar">
+      <app-sidebar></app-sidebar>
+    </div>
+      <div class="content-wrapper">
+        <router-outlet></router-outlet>
+      </div>
+  </div>
+</ng-container>
+<ng-template #loginTemplate>
+  <router-outlet></router-outlet>
+</ng-template>

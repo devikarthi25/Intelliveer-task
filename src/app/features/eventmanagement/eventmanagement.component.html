@@ -1,0 +1,17 @@
+<div class="column">
+  <div class="flex items-center justify-between py-3">
+    <h2 class="font-bold text-xl">Event List</h2>
+    <button class="btn2" routerLink="/add-events" *ngIf="userRole != 'user'">Add Events</button>
+  </div>
+    <ag-grid-angular
+      style="height: calc(100vh - 150px); width: 100%"
+      [rowData]="rowData"
+      [columnDefs]="colDefs"
+      [defaultColDef]="defaultColDef"
+      (gridReady)="onGridReady($event)"
+      [pagination]="true"
+      [paginationPageSize]="10"
+      [paginationPageSizeSelector]="false"
+    />
+</div>
+

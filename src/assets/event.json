@@ -1,0 +1,10 @@
+{
+  "colDefs": [
+    { "field": "eventName", "headerName": "Event Name", "sortable": true },
+    { "field": "eventDate", "headerName": "Event Date", "sortable": true },
+    { "field": "location", "headerName": "Location", "sortable": true },
+    { "field": "price", "headerName": "Total Price", "sortable": true },
+    { "field": "seats", "headerName": "Booked Seats", "sortable": true },
+    { "field": "description", "headerName": "Description", "sortable": true }
+  ]
+}

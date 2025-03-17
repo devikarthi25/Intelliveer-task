@@ -1,0 +1,7 @@
+.ellipsis-text {
+    width: 200px;  /* Adjust width as needed */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+  }

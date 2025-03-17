@@ -1,0 +1,43 @@
+<div class="loginbg">
+    <div class="column flex justify-center items-center heightfull">
+        <div class="customcard">
+            <h1 class="text-2xl font-bold text-center text-white mb-4">Login</h1>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <span class="block">
+                    <label class="mb-2 text-white block text-sm">Enter UserName</label>
+                    <div class="flex items-center rounded-md pl-3 outline-1 -outline-offset-1 outline-gray-300">
+                        <input type="text" formControlName="name" name="username" id="username" class="text-white block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6">
+                      </div>
+                      <span
+                  *ngIf="
+                    submitted && loginForm.get('name')?.hasError('required')
+                  "
+                  class="text-red-500 text-xs"
+                >
+                  Username is required
+                </span>
+                    </span>
+                    <span class="block pt-4">
+                        <label class="mb-2 text-white block text-sm">Enter Password</label>
+                        <div class="flex items-center rounded-md pl-3 outline-1 -outline-offset-1 outline-gray-300 relative">
+                            <input type="text" [type]="showPassword ? 'text' : 'password'" formControlName="password" name="username" id="username" class="text-white block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6">
+                            <span class="absolute text-white inset-y-0 right-3 flex items-center cursor-pointer" (click)="togglePasswordVisibility()">
+                              <i class="fa-solid" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"></i>
+                            </span>
+                          </div>
+                          <span
+                  *ngIf="
+                    submitted && loginForm.get('password')?.hasError('required')
+                  "
+                  class="text-red-500 text-xs"
+                >
+                  Password is required
+                </span>
+                        </span>
+                        <span class="block text-end">
+                            <button type="submit" class="btn1">Submit</button>
+                        </span>
+            </form>
+           </div>
+    </div>
+</div>

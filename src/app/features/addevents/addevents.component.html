@@ -1,0 +1,61 @@
+<div class="grid min-h-screen place-items-center">
+  <div class="col-span-4 bg-white p-6 shadow-lg rounded-lg w-full max-w-lg">
+    <form [formGroup]="eventForm" class="flex flex-col gap-2">
+      <div>
+        <label class="fw-medium block text-sm">Event Name:</label>
+        <input type="text" formControlName="eventName" class="border w-full p-2 rounded" />
+        <span *ngIf="submitted && eventForm.get('eventName')?.hasError('required')" class="text-red-500 text-xs">
+          Event Name is required
+        </span>
+      </div>
+
+      <div>
+        <label class="fw-medium block text-sm">Location <span class="text-xs">(include iframe)</span></label>
+        <input type="text" formControlName="location" class="border w-full p-2 rounded" (input)="updateLocation()" />
+        <span *ngIf="submitted && eventForm.get('location')?.hasError('required')" class="text-red-500 text-xs">
+          Location is required
+        </span>
+      </div>
+      <div *ngIf="locationIframe" [innerHTML]="locationIframe" class="w-full overflow-hidden"></div>
+
+      <div>
+        <label class="fw-medium block text-sm">Price</label>
+        <input type="number" (keypress)="validateNumberInput($event)" formControlName="price" class="border w-full p-2 rounded" />
+        <span *ngIf="submitted && eventForm.get('price')?.hasError('required')" class="text-red-500 text-xs">
+          Price is required
+        </span>
+      </div>
+
+      <div>
+        <label class="fw-medium block text-sm">Event Date:</label>
+        <input type="date"   [min]="todayDate" formControlName="eventDate" class="border w-full p-2 rounded" />
+        <span *ngIf="submitted && eventForm.get('eventDate')?.hasError('required')" class="text-red-500 text-xs">
+          Date is required
+        </span>
+      </div>
+
+      <div>
+        <label class="fw-medium block text-sm">Total Seats</label>
+        <input type="number" (keypress)="validateNumberInput($event)" formControlName="seats" class="border w-full p-2 rounded" />
+        <span *ngIf="submitted && eventForm.get('seats')?.hasError('required')" class="text-red-500 text-xs">
+          Seats is required
+        </span>
+      </div>
+
+      <div>
+        <label class="fw-medium block text-sm">Description</label>
+        <textarea formControlName="description" class="border w-full p-2 rounded"></textarea>
+        <span *ngIf="submitted && eventForm.get('description')?.hasError('required')" class="text-red-500 text-xs">
+          Description is required
+        </span>
+      </div>
+
+      <button type="submit" *ngIf="!edit" (click)="onAddEmployee()" class="btn1 mt-3 w-full cursor-pointer">
+        Save
+      </button>
+      <button type="submit"  *ngIf="edit" (click)="editEvent()" class="btn1 mt-3 w-full cursor-pointer">
+        Edit
+      </button>
+    </form>
+  </div>
+</div>
