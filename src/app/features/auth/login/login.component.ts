@@ -44,16 +44,10 @@ export class LoginComponent {
     this.showPassword = !this.showPassword;
   }
 
-  onSubmit() {
-    console.log(this.loginForm.value);
-    
+  onSubmit() {    
     this.submitted = true;
-    if (this.loginForm.valid) {
-      console.log(this.loginForm.value,this.UserData);
-      
-      const user = this.UserData.find((u:any)=> u.name === this.loginForm.value.name && u.password === this.loginForm.value.password);
-      console.log(user);
-              
+    if (this.loginForm.valid) {      
+      const user = this.UserData.find((u:any)=> u.name === this.loginForm.value.name && u.password === this.loginForm.value.password);              
         if (user) {
           sessionStorage.setItem('authToken', JSON.stringify({ isAuthenticated: true }));
           sessionStorage.setItem('role', user.role.toString())

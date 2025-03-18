@@ -11,12 +11,13 @@
 
       <div>
         <label class="fw-medium block text-sm">Location <span class="text-xs">(include iframe)</span></label>
-        <input type="text" formControlName="location" class="border w-full p-2 rounded" (input)="updateLocation()" />
+        <input [readonly]="edit" type="text" formControlName="location" class="border w-full p-2 rounded" (input)="updateLocation()" />
         <span *ngIf="submitted && eventForm.get('location')?.hasError('required')" class="text-red-500 text-xs">
           Location is required
         </span>
       </div>
-      <div *ngIf="locationIframe" [innerHTML]="locationIframe" class="w-full overflow-hidden"></div>
+      <iframe *ngIf="edit && extractedSrc" [src]="extractedSrc" frameborder="0"></iframe>
+      <div *ngIf="locationIframe &&  !edit" [innerHTML]="locationIframe" class="w-full overflow-hidden"></div>
 
       <div>
         <label class="fw-medium block text-sm">Price</label>

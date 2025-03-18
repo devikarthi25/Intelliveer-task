@@ -25,12 +25,10 @@ export class AddeventsComponent {
   extractedSrc: any;
 
   constructor(private callApi : DataService,private router : Router,private route : ActivatedRoute,private sanitizer: DomSanitizer){
-   this.route.queryParams.subscribe((res:any) => {
+   this.route.queryParams.subscribe((res:any) => {    
     if(res.userId){
       this.callApi.getEventById(Number(res.userId)).subscribe((res:any) => {
-       console.log(res);
        this.getUserId = res
-       console.log(this.getUserId);
        this.eventForm.patchValue({
         eventName : this.getUserId.eventName,
          location: this.getUserId.location,
@@ -39,8 +37,11 @@ export class AddeventsComponent {
          seats : this.getUserId.seats,
          description : this.getUserId.description
        })
+       
+       this.edit = true
+       this.extractedSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.getUserId.location);
      })
-     this.edit = true
+     
     }
     else{
       this.edit = false
@@ -61,7 +62,6 @@ export class AddeventsComponent {
   this.callApi.getEvents().subscribe((res:any) =>{
     this.totalRecords = res.length
   })
-  console.log(this.edit);
   }
 
   updateLocation() {
@@ -69,15 +69,12 @@ export class AddeventsComponent {
     
     if (locationValue) {
       this.locationIframe = this.sanitizer.bypassSecurityTrustHtml(locationValue);
-      
-      // Extract the src attribute from the iframe HTML
       const parser = new DOMParser();
       const doc = parser.parseFromString(locationValue, 'text/html');
       const iframe = doc.querySelector('iframe');
   
       if (iframe) {
         this.extractedSrc = iframe.getAttribute('src');
-        console.log("Extracted SRC:", this.extractedSrc);
       } else {
         console.warn("No iframe found in the provided HTML");
       }
@@ -87,15 +84,12 @@ export class AddeventsComponent {
 
   onAddEmployee(): void {
     this.submitted = true;
-  if (this.eventForm.valid){
-    console.log(this.totalRecords,this.eventForm.value);
-    
+  if (this.eventForm.valid){    
     const payload = {
       id: this.totalRecords + 1,
       ...this.eventForm.value,
       location: this.extractedSrc,
     };
-    console.log(payload);
 
     this.callApi.addEvent(payload).subscribe({
       next: (res: any) => {
@@ -111,13 +105,9 @@ export class AddeventsComponent {
   }
 
   editEvent() {
-    this.submitted = true;
-    console.log(this.eventForm.value);
-  
+    this.submitted = true;  
     if (this.eventForm.invalid) return;
-  
     const eventId = Number(this.getUserId?.id);
-  
     if (!eventId) {
       this.callApi.showError('Invalid Event ID');
       return;
@@ -128,9 +118,7 @@ export class AddeventsComponent {
       ...this.eventForm.value,
       location: this.extractedSrc,
     };
-  
-    console.log('Updating event:', payloads);
-  
+    
     this.callApi.updateEvent(eventId, payloads).subscribe({
       next: (res: any) => {
         this.callApi.showSuccess('Event edited successfully!');
